@@ -33,9 +33,9 @@
         - nmap
         - owncloud-client-cmd
 
-  # setup sync
-  - debug:
-    msg: 'Logging in as {{ username }}'
+    # setup sync
+    - debug:
+      msg: 'Logging in as {{ username }}'
 
 # # chrome
 # wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -

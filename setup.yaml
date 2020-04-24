@@ -31,10 +31,10 @@
   # setup sync
   - name: Ensure a job that runs at 2 and 5 exists. Creates an entry like "0 5,2 * * ls -alh > /dev/null"
     cron:
-      name: "check dirs {{ password }}"
-      minute: "0"
-      hour: "5,2"
-      job: "echo {{ password }} > /tmp/test1"  
+      name: "Set up qnap sync"
+      minute: "01"
+      hour: "*/2"
+      job: ""  
 
 # # chrome
 # wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -

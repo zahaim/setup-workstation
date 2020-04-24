@@ -7,4 +7,95 @@
       state: latest
   - name: Install tools
     apt:
-      name: [htop, mc]
+      name:
+        - htop
+        - mc
+        - keepassx
+        - vim
+        - clipit
+        - gitg
+        - clusterssh
+        - jq
+        - apt-transport-https
+        - libpangox-1.0-0
+        - libcanberra-gtk-module
+        - freerdp2-x11
+        - nmap
+        - owncloud-client-cmd
+
+# setup sync
+
+# # chrome
+# wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+
+# # atom
+# sudo add-apt-repository ppa:webupd8team/atom
+
+# # cisco anyconnect missing library libpangox-1.0-0 libcanberra-gtk-module (installed below)
+# curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+# echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list
+
+# # update
+# sudo apt update
+
+# sudo apt install -y \
+# keepassx \
+# atom \
+# google-chrome-stable \
+# mc \
+# vim \
+# rdesktop \
+# clipit \
+# gitg \
+# clusterssh \
+# jq \
+# mysql-workbench \
+# apt-transport-https \
+# libpangox-1.0-0 \
+# libcanberra-gtk-module \
+# kubectl \
+# freerdp2-x11 \
+# nmap \
+# postgresql-client-common && postgresql-client-10
+
+# # slack
+# #wget https://downloads.slack-edge.com/linux_releases/slack-desktop-3.3.8-amd64.deb
+# #sudo dpkg -i slack-desktop-3.3.8-amd64.deb
+
+# # k9s
+# wget $(curl -sL https://api.github.com/repos/derailed/k9s/releases/latest | jq -r '.assets[].browser_download_url' | grep Linux_x86_64)
+# sudo tar -xvf k9s_*_Linux_x86_64.tar.gz -C /usr/bin/ k9s
+# rm -f k9s*.tar.gz
+
+# # keepalive
+# sudo bash -c 'echo "    ServerAliveInterval 300" >> /etc/ssh/ssh_config'
+# sudo bash -c 'echo "    ServerAliveCountMax 2" >> /etc/ssh/ssh_config'
+
+# # crontab
+# sudo cp -p ~/Documents/iSTA/crontab_szczyrja /var/spool/cron/crontabs/szczyrja
+
+# # install docker
+# sudo apt-get install \
+#     apt-transport-https \
+#     ca-certificates \
+#     curl \
+#     gnupg-agent \
+#     software-properties-common
+
+# curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+# echo -e "\ndeb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable" | sudo tee -a /etc/apt/sources.list
+
+# # repo version needs to be adapted for ubuntu (bionic for example)
+
+# sudo apt-get update && sudo apt-get install -y docker-ce docker-ce-cli containerd.io
+# sudo groupadd docker && sudo usermod -aG docker $USER
+# sudo systemctl enable docker
+
+# # install ansible
+# sudo apt update
+# sudo apt install software-properties-common
+# sudo apt-add-repository --yes ppa:ansible/ansible
+# sudo apt install ansible sshpass
+
+# # ras
+# firefox ras.ista24.com

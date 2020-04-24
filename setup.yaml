@@ -2,11 +2,9 @@
   become: true
 
   vars_prompt:
-
   - name: username
     prompt: "I need your username to sync from nas, janek"
     private: no
-
   - name: password
     prompt: "...and your password is?"
   
@@ -33,9 +31,9 @@
         - nmap
         - owncloud-client-cmd
 
-    # setup sync
-    - debug:
-      msg: 'Logging in as {{ username }}'
+  # setup sync
+  - debug:
+    msg: 'Logging in as {{ username }}'
 
 # # chrome
 # wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -

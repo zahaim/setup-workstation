@@ -1,5 +1,15 @@
 - hosts: localhost
   become: true
+
+  vars_prompt:
+
+  - name: username
+    prompt: "I need your username to sync from nas, janek"
+    private: no
+
+  - name: password
+    prompt: "...and your password is?"
+  
   tasks:
   - name: Upgrade all packages to the latest version
     apt:
@@ -23,7 +33,9 @@
         - nmap
         - owncloud-client-cmd
 
-# setup sync
+  # setup sync
+  - debug:
+    msg: 'Logging in as {{ username }}'
 
 # # chrome
 # wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -

@@ -34,7 +34,23 @@
       name: "Set up qnap sync"
       minute: "01"
       hour: "*/2"
-      job: ""  
+      job: "owncloudcmd --exclude ~/exclude -u janek -p {{password}} --non-interactive -h /home/szczyrja/windows https://janek.guru/owncloud/remote.php/webdav/Windows"  
+
+# install chrome
+- name: "apt | ensure Google linux signing key present"
+  apt_key: url=https://dl-ssl.google.com/linux/linux_signing_key.pub state=present
+
+- name: "apt | ensure Google chrome repo present"
+  apt_repository:
+    repo: "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main"
+    filename: "google-chrome"
+    state: present
+    update_cache: yes
+
+- name: "apt | ensure Google chrome present"
+  apt:
+    name: "{{ chrome_package }}"
+    state: present
 
 # # chrome
 # wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -

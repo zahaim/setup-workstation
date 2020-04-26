@@ -48,13 +48,13 @@
       special_time: reboot
       job: "test owncloudcmd --exclude ~/exclude -u janek -p {{password}} --non-interactive -h /home/szczyrja/test https://janek.guru/owncloud/remote.php/webdav/Linux" 
 
-  # setup sync
-  - name: setup cron job entry to sync from nas (user root) every 2h"
-    cron:
-      name: "Set up qnap sync"
-      minute: "01"
-      hour: "*/2"
-      job: "owncloudcmd --exclude ~/exclude -u janek -p {{password}} --non-interactive -h /home/szczyrja/test https://janek.guru/owncloud/remote.php/webdav/Linux > /dev/null"  
+#   # setup sync
+#   - name: setup cron job entry to sync from nas (user root) every 2h"
+#     cron:
+#       name: "Set up qnap sync"
+#       minute: "01"
+#       hour: "*/2"
+#       job: "owncloudcmd --exclude ~/exclude -u janek -p {{password}} --non-interactive -h /home/szczyrja/test https://janek.guru/owncloud/remote.php/webdav/Linux"
 
   # install chrome
   - name: "apt | ensure Google linux signing key present"
@@ -73,48 +73,43 @@
       state: present
 
   # install brave
-#   - name: "apt | ensure Brave linux signing key present"
-#     apt_key: https://brave-browser-apt-release.s3.brave.com/brave-core.asc state=present
+  - name: "apt | ensure Brave linux signing key present"
+    apt_key: url=https://brave-browser-apt-release.s3.brave.com/brave-core.asc state=present
 
-#   - name: "apt | ensure Brave repo present"
-#     apt_repository:
-#       repo: "deb [arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main"
-#       filename: "brave-browser"
-#       state: present
-#       update_cache: yes
+  - name: "apt | ensure Brave repo present"
+    apt_repository:
+      repo: "deb [arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main"
+      filename: "brave-browser"
+      state: present
+      update_cache: yes
 
-#   - name: "apt | ensure Google chrome present"
-#     apt:
-#       name: brave-browser
-#       state: present
+  - name: "apt | ensure Google chrome present"
+    apt:
+      name: brave-browser
+      state: present
 
 # install docker
 
   - name: Add Docker GPG key
     apt_key: url=https://download.docker.com/linux/ubuntu/gpg
-    become: true
 
   - name: Install basic list of packages
     apt:
       name: ['apt-transport-https','ca-certificates','curl','gnupg2','software-properties-common']
       state: present
       update_cache: yes
-    become: true
 
   - name: Add Docker APT repository
     apt_repository:
-      repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu $(. /etc/os-release; echo "$UBUNTU_CODENAME") stable
-    become: true
+      repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu $(. /etc/os-release; echo "$UBUNTU_CODENAME")/gpg stable
 
   - name: Install Docker packages
     apt:
       name: ['docker-ce','docker-ce-cli','containerd.io']
       state: present
-    become: true
 
   - name: Install Docker-compose
     shell: curl -L "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose && chmod +x /usr/local/bin/docker-compose && ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
-    become: true
 
 # # chrome
 # wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
@@ -128,26 +123,6 @@
 
 # # update
 # sudo apt update
-
-# sudo apt install -y \
-# keepassx \
-# atom \
-# google-chrome-stable \
-# mc \
-# vim \
-# rdesktop \
-# clipit \
-# gitg \
-# clusterssh \
-# jq \
-# mysql-workbench \
-# apt-transport-https \
-# libpangox-1.0-0 \
-# libcanberra-gtk-module \
-# kubectl \
-# freerdp2-x11 \
-# nmap \
-# postgresql-client-common && postgresql-client-10
 
 # # slack
 # #wget https://downloads.slack-edge.com/linux_releases/slack-desktop-3.3.8-amd64.deb
@@ -164,23 +139,6 @@
 
 # # crontab
 # sudo cp -p ~/Documents/iSTA/crontab_szczyrja /var/spool/cron/crontabs/szczyrja
-
-# # install docker
-# sudo apt-get install \
-#     apt-transport-https \
-#     ca-certificates \
-#     curl \
-#     gnupg-agent \
-#     software-properties-common
-
-# curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-# echo -e "\ndeb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable" | sudo tee -a /etc/apt/sources.list
-
-# # repo version needs to be adapted for ubuntu (bionic for example)
-
-# sudo apt-get update && sudo apt-get install -y docker-ce docker-ce-cli containerd.io
-# sudo groupadd docker && sudo usermod -aG docker $USER
-# sudo systemctl enable docker
 
 # # ras
 # firefox ras.ista24.com

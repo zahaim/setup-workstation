@@ -49,7 +49,7 @@
 
   - name: "apt | ensure Google chrome present"
     apt:
-      name: "{{ chrome_package }}"
+      name: google-chrome-stable
       state: present
 
 # # chrome

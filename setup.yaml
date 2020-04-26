@@ -29,7 +29,7 @@
         - owncloud-client-cmd
 
   # setup sync
-  - name: Ensure a job that runs at 2 and 5 exists. Creates an entry like "0 5,2 * * ls -alh > /dev/null"
+  - name: setup cron job entry for user root"
     cron:
       name: "Set up qnap sync"
       minute: "01"

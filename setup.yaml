@@ -1,7 +1,6 @@
 # TODOS:
 ## use ansible pattern: /tasks, /files, /defaults...
 ## make all hardcoded stuff in /defauls as variables
-## install missing packages with key/repo using chrome example
 
 - hosts: localhost
   become: true
@@ -88,7 +87,7 @@
       name: brave-browser
       state: present
 
-# install docker
+  # install docker
 
   - name: Add Docker GPG key
     apt_key: url=https://download.docker.com/linux/ubuntu/gpg

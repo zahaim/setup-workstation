@@ -42,19 +42,19 @@
       dest: /root/exclude
   
   # setup sync
-  - name: setup cron job entry to sync from nas (user root) on boot"
+  - name: on reboot: setup cron job entry to sync from nas (user root)"
     cron:
-      name: "Set up qnap sync"
+      name: "Set up qnap sync on boot"
       special_time: reboot
-      job: "test owncloudcmd --exclude ~/exclude -u janek -p {{password}} --non-interactive -h /home/szczyrja/test https://janek.guru/owncloud/remote.php/webdav/Linux" 
+      job: "owncloudcmd --exclude ~/exclude -u janek -p {{password}} --non-interactive -h /home/szczyrja/test https://janek.guru/owncloud/remote.php/webdav/Linux" 
 
-#   # setup sync
-#   - name: setup cron job entry to sync from nas (user root) every 2h"
-#     cron:
-#       name: "Set up qnap sync"
-#       minute: "01"
-#       hour: "*/2"
-#       job: "owncloudcmd --exclude ~/exclude -u janek -p {{password}} --non-interactive -h /home/szczyrja/test https://janek.guru/owncloud/remote.php/webdav/Linux"
+  # setup sync
+  - name: every 2h: setup cron job entry to sync from nas (user root)"
+    cron:
+      name: "Set up qnap sync every 2h"
+      minute: "01"
+      hour: "*/2"
+      job: "owncloudcmd --exclude ~/exclude -u janek -p {{password}} --non-interactive -h /home/szczyrja/test https://janek.guru/owncloud/remote.php/webdav/Linux"
 
   # install chrome
   - name: "apt | ensure Google linux signing key present"
@@ -111,22 +111,12 @@
   - name: Install Docker-compose
     shell: curl -L "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose && chmod +x /usr/local/bin/docker-compose && ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 
-# # chrome
-# wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-
 # # atom
 # sudo add-apt-repository ppa:webupd8team/atom
 
-# # cisco anyconnect missing library libpangox-1.0-0 libcanberra-gtk-module (installed below)
+# kubectl
 # curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
 # echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list
-
-# # update
-# sudo apt update
-
-# # slack
-# #wget https://downloads.slack-edge.com/linux_releases/slack-desktop-3.3.8-amd64.deb
-# #sudo dpkg -i slack-desktop-3.3.8-amd64.deb
 
 # # k9s
 # wget $(curl -sL https://api.github.com/repos/derailed/k9s/releases/latest | jq -r '.assets[].browser_download_url' | grep Linux_x86_64)
@@ -136,9 +126,3 @@
 # # keepalive
 # sudo bash -c 'echo "    ServerAliveInterval 300" >> /etc/ssh/ssh_config'
 # sudo bash -c 'echo "    ServerAliveCountMax 2" >> /etc/ssh/ssh_config'
-
-# # crontab
-# sudo cp -p ~/Documents/iSTA/crontab_szczyrja /var/spool/cron/crontabs/szczyrja
-
-# # ras
-# firefox ras.ista24.com

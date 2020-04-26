@@ -33,6 +33,7 @@
         - freerdp2-x11
         - nmap
         - owncloud-client-cmd
+        - curl
 
   # copy exclude file to the host
   - name: Copy file with owner and permissions
@@ -53,7 +54,7 @@
       name: "Set up qnap sync"
       minute: "01"
       hour: "*/2"
-      job: "owncloudcmd --exclude ~/exclude -u janek -p {{password}} --non-interactive -h /home/szczyrja/test https://janek.guru/owncloud/remote.php/webdav/Linux"  
+      job: "owncloudcmd --exclude ~/exclude -u janek -p {{password}} --non-interactive -h /home/szczyrja/test https://janek.guru/owncloud/remote.php/webdav/Linux > /dev/null"  
 
   # install chrome
   - name: "apt | ensure Google linux signing key present"
@@ -71,6 +72,22 @@
       name: google-chrome-stable
       state: present
 
+# install brave
+  - name: "apt | ensure Brave linux signing key present"
+    apt_key: https://brave-browser-apt-release.s3.brave.com/brave-core.asc state=present
+
+  - name: "apt | ensure Brave repo present"
+    apt_repository:
+      repo: "deb [arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main"
+      filename: "brave-browser"
+      state: present
+      update_cache: yes
+
+  - name: "apt | ensure Google chrome present"
+    apt:
+      name: brave-browser
+      state: present
+
 # install docker
 
   - name: Add Docker GPG key
@@ -86,7 +103,7 @@
 
   - name: Add Docker APT repository
     apt_repository:
-      repo: deb [arch=amd64] https://download.docker.com/linux/{{ansible_distribution|lower}} {{ansible_distribution_release}} stable
+      repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu $(. /etc/os-release; echo "$UBUNTU_CODENAME") stable
     become: true
 
   - name: Install Docker packages

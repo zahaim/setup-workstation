@@ -1,3 +1,6 @@
+# setup my workstation with ansible
+# run it like `sudo ansible-pull -i localhost -U https://github.com/zahaim/setup-workstation.git setup.yaml`
+
 # TODOS:
 ## use ansible pattern: /tasks, /files, /defaults...
 ## make all hardcoded stuff in /defauls as variables

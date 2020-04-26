@@ -1,6 +1,12 @@
+# TODOS:
+## use ansible pattern: /tasks, /files, /defaults...
+## make all hardcoded stuff in /defauls as variables
+## install missing packages with key/repo using chrome example
+
 - hosts: localhost
   become: true
-
+  
+  # ask for qnap password
   vars_prompt:
   - name: password
     prompt: "...and your password for qnap sync (user janek) is?"
@@ -28,13 +34,26 @@
         - nmap
         - owncloud-client-cmd
 
+  # copy exclude file to the host
+  - name: Copy file with owner and permissions
+    copy:
+      src: ~/exclude
+      dest: /root/exclude
+  
   # setup sync
-  - name: setup cron job entry for user root"
+  - name: setup cron job entry to sync from nas (user root) on boot"
+    cron:
+      name: "Set up qnap sync"
+      special_time: reboot
+      job: "owncloudcmd --exclude ~/exclude -u janek -p {{password}} --non-interactive -h /home/szczyrja/test https://janek.guru/owncloud/remote.php/webdav/Linux"  
+
+  # setup sync
+  - name: setup cron job entry to sync from nas (user root) every 2h"
     cron:
       name: "Set up qnap sync"
       minute: "01"
       hour: "*/2"
-      job: "owncloudcmd --exclude ~/exclude -u janek -p {{password}} --non-interactive -h /home/szczyrja/windows https://janek.guru/owncloud/remote.php/webdav/Windows"  
+      job: "owncloudcmd --exclude ~/exclude -u janek -p {{password}} --non-interactive -h /home/szczyrja/test https://janek.guru/owncloud/remote.php/webdav/Linux"  
 
   # install chrome
   - name: "apt | ensure Google linux signing key present"
@@ -51,6 +70,34 @@
     apt:
       name: google-chrome-stable
       state: present
+
+# install docker
+
+  - name: Add Docker GPG key
+    apt_key: url=https://download.docker.com/linux/ubuntu/gpg
+    become: true
+
+  - name: Install basic list of packages
+    apt:
+      name: ['apt-transport-https','ca-certificates','curl','gnupg2','software-properties-common']
+      state: present
+      update_cache: yes
+    become: true
+
+  - name: Add Docker APT repository
+    apt_repository:
+      repo: deb [arch=amd64] https://download.docker.com/linux/{{ansible_distribution|lower}} {{ansible_distribution_release}} stable
+    become: true
+
+  - name: Install Docker packages
+    apt:
+      name: ['docker-ce','docker-ce-cli','containerd.io']
+      state: present
+    become: true
+
+  - name: Install Docker-compose
+    shell: curl -L "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose && chmod +x /usr/local/bin/docker-compose && ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+    become: true
 
 # # chrome
 # wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
@@ -117,12 +164,6 @@
 # sudo apt-get update && sudo apt-get install -y docker-ce docker-ce-cli containerd.io
 # sudo groupadd docker && sudo usermod -aG docker $USER
 # sudo systemctl enable docker
-
-# # install ansible
-# sudo apt update
-# sudo apt install software-properties-common
-# sudo apt-add-repository --yes ppa:ansible/ansible
-# sudo apt install ansible sshpass
 
 # # ras
 # firefox ras.ista24.com

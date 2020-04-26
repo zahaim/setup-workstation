@@ -46,7 +46,7 @@
     cron:
       name: "Set up qnap sync on boot"
       special_time: reboot
-      job: "owncloudcmd --exclude ~/exclude -u janek -p {{password}} --non-interactive -h /home/szczyrja/test https://janek.guru/owncloud/remote.php/webdav/Linux" 
+      job: "owncloudcmd --exclude ~/exclude -u janek -p {{password}} --non-interactive -h /home/szczyrja/ https://janek.guru/owncloud/remote.php/webdav/Linux" 
 
   # setup sync
   - name: every 2h - setup cron job entry to sync from nas (user root)"
@@ -54,7 +54,7 @@
       name: "Set up qnap sync every 2h"
       minute: "01"
       hour: "*/2"
-      job: "owncloudcmd --exclude ~/exclude -u janek -p {{password}} --non-interactive -h /home/szczyrja/test https://janek.guru/owncloud/remote.php/webdav/Linux"
+      job: "owncloudcmd --exclude ~/exclude -u janek -p {{password}} --non-interactive -h /home/szczyrja/ https://janek.guru/owncloud/remote.php/webdav/Linux"
 
   # install chrome
   - name: "apt | ensure Google linux signing key present"

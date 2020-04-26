@@ -46,7 +46,7 @@
     cron:
       name: "Set up qnap sync"
       special_time: reboot
-      job: "owncloudcmd --exclude ~/exclude -u janek -p {{password}} --non-interactive -h /home/szczyrja/test https://janek.guru/owncloud/remote.php/webdav/Linux"  
+      job: "test owncloudcmd --exclude ~/exclude -u janek -p {{password}} --non-interactive -h /home/szczyrja/test https://janek.guru/owncloud/remote.php/webdav/Linux" 
 
   # setup sync
   - name: setup cron job entry to sync from nas (user root) every 2h"

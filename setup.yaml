@@ -40,7 +40,7 @@
   # copy exclude file to the host
   - name: Copy file with owner and permissions
     copy:
-      src: ~/exclude
+      src: files/exclude
       dest: /root/exclude
   
   # setup sync

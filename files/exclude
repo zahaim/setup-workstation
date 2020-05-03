@@ -15,4 +15,6 @@ vmware*
 .vscode/
 .vscode-server/
 ApacheDirectoryStudio/
-*.git/
+*.git/logs/
+*.git/objects/
+*.git/hooks/

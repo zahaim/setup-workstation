@@ -3,7 +3,6 @@
 *cache*
 .cache
 *.lock
-*Portable/PortableApps*
 VirtualBox*
 vmware*
 *.vmdk
@@ -17,4 +16,4 @@ vmware*
 ApacheDirectoryStudio/
 *.git/logs/
 *.git/objects/
-*.git/hooks/
+*hooks/

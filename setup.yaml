@@ -113,18 +113,22 @@
 
 # kubectl
 
-  - name: Add Docker GPG key
+  - name: Add kubectl GPG key
     apt_key: url=https://packages.cloud.google.com/apt/doc/apt-key.gpg
 
-  - name: Add Docker APT repository
+  - name: Add kubectl APT repository
     apt_repository:
       repo: deb https://apt.kubernetes.io/ kubernetes-xenial main
       state: present
 
-  - name: Install Docker packages
+  - name: Install kubectl packages
     apt:
       name: ['kubectl']
       state: present
+
+# k9s
+  - name: get k9s and place it in /usr/sbin
+    shell: wget https://github.com/derailed/k9s/releases/latest/download/k9s_Linux_x86_64.tar.gz -O - | sudo tar -C /usr/sbin -xzf - k9s
 
 # TODOS:
 ## use ansible pattern: /tasks, /files, /defaults...
@@ -132,11 +136,6 @@
 ## setup keepalive
 # sudo bash -c 'echo "    ServerAliveInterval 300" >> /etc/ssh/ssh_config'
 # sudo bash -c 'echo "    ServerAliveCountMax 2" >> /etc/ssh/ssh_config'
-## install 
-# atom add-apt-repository ppa:webupd8team/atom
-# kubectl
-# curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
-# echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list
 # k9s
 # wget $(curl -sL https://api.github.com/repos/derailed/k9s/releases/latest | jq -r '.assets[].browser_download_url' | grep Linux_x86_64)
 # sudo tar -xvf k9s_*_Linux_x86_64.tar.gz -C /usr/bin/ k9s

@@ -131,12 +131,6 @@
     shell: wget https://github.com/derailed/k9s/releases/latest/download/k9s_Linux_x86_64.tar.gz -O - | sudo tar -C /usr/sbin -xzf - k9s
 
 # TODOS:
-## use ansible pattern: /tasks, /files, /defaults...
-## make all hardcoded stuff in /defauls as variables
 ## setup keepalive
 # sudo bash -c 'echo "    ServerAliveInterval 300" >> /etc/ssh/ssh_config'
 # sudo bash -c 'echo "    ServerAliveCountMax 2" >> /etc/ssh/ssh_config'
-# k9s
-# wget $(curl -sL https://api.github.com/repos/derailed/k9s/releases/latest | jq -r '.assets[].browser_download_url' | grep Linux_x86_64)
-# sudo tar -xvf k9s_*_Linux_x86_64.tar.gz -C /usr/bin/ k9s
-# rm -f k9s*.tar.gz

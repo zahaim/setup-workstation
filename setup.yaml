@@ -32,6 +32,7 @@
         - nmap
         - owncloud-client-cmd
         - curl
+        - gnupg2
 
   # copy exclude file to the host
   - name: Copy file with owner and permissions
@@ -109,6 +110,21 @@
 
   - name: Install Docker-compose
     shell: curl -L "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose && chmod +x /usr/local/bin/docker-compose && ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+
+# kubectl
+
+  - name: Add Docker GPG key
+    apt_key: url=https://packages.cloud.google.com/apt/doc/apt-key.gpg
+
+  - name: Add Docker APT repository
+    apt_repository:
+      repo: deb https://apt.kubernetes.io/ kubernetes-xenial main
+      state: present
+
+  - name: Install Docker packages
+    apt:
+      name: ['kubectl']
+      state: present
 
 # TODOS:
 ## use ansible pattern: /tasks, /files, /defaults...

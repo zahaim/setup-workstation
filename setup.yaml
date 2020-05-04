@@ -135,6 +135,10 @@
   - name: get k9s and place it in /usr/sbin
     shell: wget https://github.com/derailed/k9s/releases/latest/download/k9s_Linux_x86_64.tar.gz -O - | sudo tar -C /usr/sbin -xzf - k9s
 
+# terraform
+  - name: get terraform and place it in /usr/sbin
+    shell: wget https://releases.hashicorp.com/terraform/0.12.24/terraform_0.12.24_linux_amd64.zip -O - | sudo tar -C /usr/sbin -xzf - terraform
+
 # TODOS:
 ## setup keepalive
 # sudo bash -c 'echo "    ServerAliveInterval 300" >> /etc/ssh/ssh_config'

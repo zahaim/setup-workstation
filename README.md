@@ -7,4 +7,4 @@ sudo apt update
 sudo apt install ansible```
 
 # then run it like 
-`sudo ansible-pull -i inventory.yaml -U https://github.com/zahaim/setup-workstation.git setup.yaml`
+`sudo ansible-pull -U https://github.com/zahaim/setup-workstation.git setup.yaml`

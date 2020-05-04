@@ -4,7 +4,7 @@
 # sudo apt-add-repository --yes ppa:ansible/ansible
 # sudo apt update
 # sudo apt install ansible```
-# run it like `sudo ansible-pull -i inventory.yaml -U https://github.com/zahaim/setup-workstation.git setup.yaml`
+# run it like `sudo ansible-pull -U https://github.com/zahaim/setup-workstation.git setup.yaml`
 
 - hosts: localhost
   become: true

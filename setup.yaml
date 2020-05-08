@@ -1,10 +1,5 @@
 # setup my workstation with ansible
-# ```sudo apt update
-# sudo apt install software-properties-common
-# sudo apt-add-repository --yes ppa:ansible/ansible
-# sudo apt update
-# sudo apt install ansible```
-# run it like `sudo ansible-pull -U https://github.com/zahaim/setup-workstation.git setup.yaml`
+# README before the use
 
 - hosts: localhost
   become: true
@@ -143,3 +138,6 @@
 ## setup keepalive
 # sudo bash -c 'echo "    ServerAliveInterval 300" >> /etc/ssh/ssh_config'
 # sudo bash -c 'echo "    ServerAliveCountMax 2" >> /etc/ssh/ssh_config'
+
+# install keepassx
+# crontab sync aliases

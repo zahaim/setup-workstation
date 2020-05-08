@@ -112,7 +112,7 @@
 
   - name: Add Docker APT repository
     apt_repository:
-      repo: deb https://download.docker.com/linux/ubuntu bionic stable
+      repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable
       state: present
 
   - name: Install Docker packages
@@ -130,7 +130,7 @@
 
   - name: Add kubectl APT repository
     apt_repository:
-      repo: deb https://apt.kubernetes.io/ kubernetes-xenial main
+      repo: deb [arch=amd64] https://apt.kubernetes.io/ kubernetes-xenial main
       state: present
 
   - name: Install kubectl packages
@@ -144,7 +144,7 @@
 
 # terraform
   - name: get terraform and place it in /usr/sbin
-    shell: wget -q -O tmp.zip https://releases.hashicorp.com/terraform/0.12.24/terraform_0.12.24_linux_amd64.zip && sudo unzip tmp.zip -d /usr/sbin && rm tmp.zip
+    shell: wget -O tmp.zip https://releases.hashicorp.com/terraform/0.12.24/terraform_0.12.24_linux_amd64.zip && sudo unzip tmp.zip -d /usr/sbin && rm tmp.zip
 
 # atom
 

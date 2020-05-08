@@ -33,6 +33,7 @@
         - owncloud-client-cmd
         - curl
         - gnupg2
+        - keychain
 
   # copy exclude file to the host
   - name: Copy file with owner and permissions

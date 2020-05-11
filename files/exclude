@@ -16,3 +16,4 @@ vmware*
 ApacheDirectoryStudio/
 *.git/
 *hooks/
+*Zone.Identifier

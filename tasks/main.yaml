@@ -1,0 +1,139 @@
+# setup my workstation with ansible
+
+- hosts: localhost
+  become: true
+  
+  # ask for qnap password
+  vars_prompt:
+  - name: password
+    prompt: "...and your password for qnap sync (user janek) is?"
+  
+  tasks:
+  - name: Upgrade all packages to the latest version
+    apt:
+      name: "*"
+      state: latest
+  - name: Install tools
+    apt:
+      name:
+        - htop
+        - mc
+        - keepassx
+        - vim
+        - clipit
+        - gitg
+        - clusterssh
+        - jq
+        - apt-transport-https
+        - libpangox-1.0-0
+        - libcanberra-gtk-module
+        - freerdp2-x11
+        - nmap
+        - owncloud-client-cmd
+        - curl
+        - gnupg2
+
+  # copy exclude file to the host
+  - name: Copy file with owner and permissions
+    copy:
+      src: files/exclude
+      dest: /root/exclude
+  
+  # setup sync
+  - name: on reboot - setup cron job entry to sync from nas (user root)"
+    cron:
+      name: "Set up qnap sync on boot"
+      special_time: reboot
+      job: "/bin/sleep 30 && /usr/bin/owncloudcmd --exclude /root/exclude -u janek -p {{password}} --non-interactive -h /home/szczyrja/ https://janek.guru/owncloud/remote.php/webdav/Linux >> /tmp/sync.log 2>&1" 
+
+  # setup sync
+  - name: every 2h - setup cron job entry to sync from nas (user root)"
+    cron:
+      name: "Set up qnap sync every 2h"
+      minute: "01"
+      hour: "*/2"
+      job: "/usr/bin/owncloudcmd --exclude /root/exclude -u janek -p {{password}} --non-interactive -h /home/szczyrja/ https://janek.guru/owncloud/remote.php/webdav/Linux >> /tmp/sync.log 2>&1"
+
+  # install chrome
+  - name: "apt | ensure Google linux signing key present"
+    apt_key: url=https://dl-ssl.google.com/linux/linux_signing_key.pub state=present
+
+  - name: "apt | ensure Google chrome repo present"
+    apt_repository:
+      repo: "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main"
+      filename: "google-chrome"
+      state: present
+      update_cache: yes
+
+  - name: "apt | ensure Google chrome present"
+    apt:
+      name: google-chrome-stable
+      state: present
+
+  # install brave
+  - name: "apt | ensure Brave linux signing key present"
+    apt_key: url=https://brave-browser-apt-release.s3.brave.com/brave-core.asc state=present
+
+  - name: "apt | ensure Brave repo present"
+    apt_repository:
+      repo: "deb [arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main"
+      filename: "brave-browser"
+      state: present
+      update_cache: yes
+
+  - name: "apt | ensure Brave chrome present"
+    apt:
+      name: brave-browser
+      state: present
+
+  # install docker
+
+  - name: Add Docker GPG key
+    apt_key: url=https://download.docker.com/linux/ubuntu/gpg
+
+  - name: Install basic list of packages
+    apt:
+      name: ['apt-transport-https','ca-certificates','curl','gnupg2','software-properties-common']
+      state: present
+      update_cache: yes
+
+  - name: Add Docker APT repository
+    apt_repository:
+      repo: deb https://download.docker.com/linux/ubuntu bionic stable
+      state: present
+
+  - name: Install Docker packages
+    apt:
+      name: ['docker-ce','docker-ce-cli','containerd.io']
+      state: present
+
+  - name: Install Docker-compose
+    shell: curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose && chmod +x /usr/local/bin/docker-compose && ln -sf /usr/local/bin/docker-compose /usr/bin/docker-compose
+
+# kubectl
+
+  - name: Add kubectl GPG key
+    apt_key: url=https://packages.cloud.google.com/apt/doc/apt-key.gpg
+
+  - name: Add kubectl APT repository
+    apt_repository:
+      repo: deb https://apt.kubernetes.io/ kubernetes-xenial main
+      state: present
+
+  - name: Install kubectl packages
+    apt:
+      name: ['kubectl']
+      state: present
+
+# k9s
+  - name: get k9s and place it in /usr/sbin
+    shell: wget https://github.com/derailed/k9s/releases/latest/download/k9s_Linux_x86_64.tar.gz -O - | sudo tar -C /usr/sbin -xzf - k9s
+
+# terraform
+  - name: get terraform and place it in /usr/sbin
+    shell: wget https://releases.hashicorp.com/terraform/0.12.24/terraform_0.12.24_linux_amd64.zip -O - | sudo tar -C /usr/sbin -xzf - terraform
+
+# TODOS:
+## setup keepalive
+# sudo bash -c 'echo "    ServerAliveInterval 300" >> /etc/ssh/ssh_config'
+# sudo bash -c 'echo "    ServerAliveCountMax 2" >> /etc/ssh/ssh_config'

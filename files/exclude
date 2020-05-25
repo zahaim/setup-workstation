@@ -17,3 +17,4 @@ ApacheDirectoryStudio/
 *.git/
 *hooks/
 *Zone.Identifier
+.atom/

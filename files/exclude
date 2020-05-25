@@ -14,7 +14,9 @@ vmware*
 .vscode/
 .vscode-server/
 ApacheDirectoryStudio/
-*.git/
-*hooks/
+objects
+logs
+refs
+hooks
 *Zone.Identifier
 .atom/

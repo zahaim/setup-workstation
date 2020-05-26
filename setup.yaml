@@ -158,15 +158,15 @@
       name: ['atom']
       state: present
 
-# Install code snap
-- name: Install foo
-  snap:
-    name:
-      - code
+  # Install code snap
+  - name: Install foo
+    snap:
+      name:
+        - code
 
-# terraform (unable to find a way to install latest so far)
-- name: get terraform and place it in /usr/sbin
-  shell: wget -O tmp.zip https://releases.hashicorp.com/terraform/0.12.24/terraform_0.12.24_linux_amd64.zip && sudo unzip -o tmp.zip -d /usr/sbin/ && rm tmp.zip
+  # terraform (unable to find a way to install latest so far)
+  - name: get terraform and place it in /usr/sbin
+    shell: wget -O tmp.zip https://releases.hashicorp.com/terraform/0.12.24/terraform_0.12.24_linux_amd64.zip && sudo unzip -o tmp.zip -d /usr/sbin/ && rm tmp.zip
 
 # TODOS:
 ## setup keepalive

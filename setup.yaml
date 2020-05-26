@@ -159,10 +159,10 @@
       state: present
 
   # Install code snap
-  - name: Install foo
+  - name: Install code from snap
     snap:
-      name:
-        - code
+      name: code
+      classic: yes
 
   # terraform (unable to find a way to install latest so far)
   - name: get terraform and place it in /usr/sbin

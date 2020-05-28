@@ -32,6 +32,7 @@
         - owncloud-client-cmd
         - curl
         - gnupg2
+        - ncdu
 
   # copy exclude file to the host
   - name: Copy file with owner and permissions

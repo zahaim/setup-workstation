@@ -20,3 +20,4 @@ refs
 hooks
 *Zone.Identifier
 .atom/
+.ansible/

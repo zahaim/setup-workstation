@@ -32,20 +32,21 @@
         - owncloud-client-cmd
         - curl
         - gnupg2
+        - keychain
         - ncdu
 
   # copy exclude file to the host
   - name: Copy file with owner and permissions
     copy:
       src: exclude
-      dest: /root/exclude
+      dest: /home/szczyrja/exclude
   
   # setup sync
   - name: on reboot - setup cron job entry to sync from nas (user root)"
     cron:
       name: "Set up qnap sync on boot"
       special_time: reboot
-      job: "/bin/sleep 30 && /usr/bin/owncloudcmd --exclude /root/exclude -u janek -p {{password}} --non-interactive -h /home/szczyrja/ https://janek.guru/owncloud/remote.php/webdav/Linux >> /tmp/sync.log 2>&1" 
+      job: "/bin/sleep 30 && /usr/bin/owncloudcmd --exclude /home/szczyrja/exclude -u janek -p {{password}} --non-interactive -h /home/szczyrja/ https://janek.guru/owncloud/remote.php/webdav/Linux >> /tmp/sync.log 2>&1" 
 
   # setup sync
   - name: every 2h - setup cron job entry to sync from nas (user root)"
@@ -53,7 +54,16 @@
       name: "Set up qnap sync every 2h"
       minute: "01"
       hour: "*/2"
-      job: "/usr/bin/owncloudcmd --exclude /root/exclude -u janek -p {{password}} --non-interactive -h /home/szczyrja/ https://janek.guru/owncloud/remote.php/webdav/Linux >> /tmp/sync.log 2>&1"
+      job: "/usr/bin/owncloudcmd --exclude /home/szczyrja/exclude -u janek -p {{password}} --non-interactive -h /home/szczyrja/ https://janek.guru/owncloud/remote.php/webdav/Linux >> /tmp/sync.log 2>&1"
+
+  # sync aliases
+    - name: every 2h - setup cron job entry to sync aliases"
+      cron:
+        name: "Set up sync aliases every 2h"
+        minute: "11"
+        hour: "*/2"
+        user: szczyrja
+        job: "SSH_AUTH_SOCK=/run/user/1000/keyring/ssh /home/szczyrja/Documents/iSTA/rsync_scripts/sync_aliases.sh szczyrja"
 
   # install chrome
   - name: "apt | ensure Google linux signing key present"
@@ -111,8 +121,7 @@
   - name: Install Docker-compose
     shell: curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose && chmod +x /usr/local/bin/docker-compose && ln -sf /usr/local/bin/docker-compose /usr/bin/docker-compose
 
-# kubectl
-
+  # kubectl
   - name: Add kubectl GPG key
     apt_key: url=https://packages.cloud.google.com/apt/doc/apt-key.gpg
 
@@ -132,7 +141,7 @@
 
 # terraform
   - name: get terraform and place it in /usr/sbin
-    shell: wget https://releases.hashicorp.com/terraform/0.12.24/terraform_0.12.24_linux_amd64.zip -O - | sudo tar -C /usr/sbin -xzf - terraform
+    shell: wget https://releases.hashicorp.com/terraform/0.12.26/terraform_0.12.26_linux_amd64.zip -O - | sudo tar -C /usr/sbin -xzf - terraform
 
 # TODOS:
 ## setup keepalive

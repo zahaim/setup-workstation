@@ -57,13 +57,13 @@
       job: "/usr/bin/owncloudcmd --exclude /home/szczyrja/exclude -u janek -p {{password}} --non-interactive -h /home/szczyrja/ https://janek.guru/owncloud/remote.php/webdav/Linux >> /tmp/sync.log 2>&1"
 
   # sync aliases
-    - name: every 2h - setup cron job entry to sync aliases"
-      cron:
-        name: "Set up sync aliases every 2h"
-        minute: "11"
-        hour: "*/2"
-        user: szczyrja
-        job: "SSH_AUTH_SOCK=/run/user/1000/keyring/ssh /home/szczyrja/Documents/iSTA/rsync_scripts/sync_aliases.sh szczyrja"
+  - name: every 2h - setup cron job entry to sync aliases"
+    cron:
+      name: "Set up sync aliases every 2h"
+      minute: "11"
+      hour: "*/2"
+      user: szczyrja
+      job: "SSH_AUTH_SOCK=/run/user/1000/keyring/ssh /home/szczyrja/Documents/iSTA/rsync_scripts/sync_aliases.sh szczyrja"
 
   # install chrome
   - name: "apt | ensure Google linux signing key present"
@@ -98,7 +98,6 @@
       state: present
 
   # install docker
-
   - name: Add Docker GPG key
     apt_key: url=https://download.docker.com/linux/ubuntu/gpg
 

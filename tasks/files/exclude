@@ -18,3 +18,5 @@ ApacheDirectoryStudio/
 *Zone.Identifier
 .atom/
 .ansible/
+.bash_history
+.keychain

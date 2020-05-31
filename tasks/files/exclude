@@ -1,10 +1,8 @@
 *Cache*
 *CACHE*
-*cache*
 .cache
 *.lock
 VirtualBox*
-vmware*
 *.vmdk
 *.vmem
 .config/
@@ -20,3 +18,4 @@ ApacheDirectoryStudio/
 .ansible/
 .bash_history
 .keychain
+._sync*

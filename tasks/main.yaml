@@ -140,7 +140,7 @@
 
 # terraform
   - name: get terraform and place it in /usr/sbin
-    shell: wget https://releases.hashicorp.com/terraform/0.12.26/terraform_0.12.26_linux_amd64.zip -O - | sudo tar -C /usr/sbin -xzf - terraform
+    shell: wget https://releases.hashicorp.com/terraform/0.12.26/terraform_0.12.26_linux_amd64.zip && sudo unzip -o terraform_0.12.26_linux_amd64.zip -d /usr/sbin/ && rm terraform_0.12.26_linux_amd64.zip
 
 # TODOS:
 ## setup keepalive

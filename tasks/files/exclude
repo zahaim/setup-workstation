@@ -19,3 +19,4 @@ ApacheDirectoryStudio/
 .bash_history
 .keychain
 ._sync*
+.kube/

@@ -42,19 +42,27 @@
       dest: /home/szczyrja/exclude
   
   # setup sync
-  - name: on reboot - setup cron job entry to sync from nas (user root)"
+  - name: on reboot - setup cron job entry to sync from nas"
     cron:
       name: "Set up qnap sync on boot"
       special_time: reboot
       job: "/bin/sleep 30 && /usr/bin/owncloudcmd --exclude /home/szczyrja/exclude -u janek -p {{password}} --non-interactive -h /home/szczyrja/ https://janek.guru/owncloud/remote.php/webdav/Linux >> /tmp/sync.log 2>&1" 
 
   # setup sync
-  - name: every 2h - setup cron job entry to sync from nas (user root)"
+  - name: every 2h - setup cron job entry to sync from nas"
     cron:
       name: "Set up qnap sync every 2h"
       minute: "01"
       hour: "*/2"
       job: "/usr/bin/owncloudcmd --exclude /home/szczyrja/exclude -u janek -p {{password}} --non-interactive -h /home/szczyrja/ https://janek.guru/owncloud/remote.php/webdav/Linux >> /tmp/sync.log 2>&1"
+
+  # setup Desktop sync
+  - name: every 2h - setup cron job entry to sync of Desktop from nas"
+    cron:
+      name: "Set up qnap sync every 2h"
+      minute: "01"
+      hour: "*/2"
+      job: "/usr/bin/owncloudcmd --exclude /home/szczyrja/exclude -u janek -p {{password}} --non-interactive -h /home/szczyrja/Desktop/ https://janek.guru/owncloud/remote.php/webdav/Windows/Desktop >> /tmp/sync.log 2>&1"
 
   # sync aliases
   - name: every 2h - setup cron job entry to sync aliases"

@@ -12,7 +12,6 @@ VirtualBox*
 .vscode/
 .vscode-server/
 ApacheDirectoryStudio/
-.git/
 *Zone.Identifier
 .atom/
 .ansible/

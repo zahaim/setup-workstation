@@ -19,3 +19,4 @@ ApacheDirectoryStudio/
 .keychain
 ._sync*
 .kube/
+.xsession-errors

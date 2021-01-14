@@ -20,3 +20,4 @@ ApacheDirectoryStudio/
 ._sync*
 .kube/
 .xsession-errors
+git/

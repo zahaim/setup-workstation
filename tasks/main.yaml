@@ -53,7 +53,7 @@
   - name: every 2h - setup cron job entry to sync from nas"
     cron:
       name: "Set up qnap sync every 2h"
-      minute: "01"
+      minute: "50"
       hour: "*/2"
       user: szczyrja
       job: "/usr/bin/owncloudcmd --exclude /home/szczyrja/exclude -u janek -p {{password}} --non-interactive -h /home/szczyrja/ https://janek.guru/owncloud/remote.php/webdav/Linux >> /tmp/sync.log 2>&1"
